@@ -20,7 +20,7 @@
         <div class="header large-12 medium-12 small-12 cell">
           <div class="grid-x grid-padding-x">
             <div class="large-6 medium-6 small-6 cell">
-              <a class="go-home" href="{% url 'assistcw:index' %}" onmouseover="hover(this);" onmouseout="nohover(this);">
+              <a class="go-home" href="{% url 'assistcw:index' %}">
                 <img id="home" src="{% static 'assistcw/img/favicon.ico' %}" alt="CW Assist" />
                 <span class="full-text">
                   <label for="home">CW Assist</label>
@@ -47,7 +47,7 @@
               <div class="large-12 medium-12 small-12 medium-12 cell">
                 <div class="grid-x grid-padding-x">
                   <div class="large-12 medium-12 small-12 cell">
-                    <textarea rows="4" autocomplete="off" name="input" placeholder="Type your message..."></textarea>
+                    <textarea rows="4" autocomplete="off" id="input" name="input" placeholder="Type your message..." oninput="convert(this);"></textarea>
                   </div>
                 </div>
               </div>
@@ -56,7 +56,7 @@
               <div class="large-12 medium-12 small-12 medium-12 cell">
                 <div class="grid-x grid-padding-x">
                   <div class="large-12 medium-12 small-12 cell">
-                    <textarea disabled rows="4" autocomplete="off" name="output" placeholder=""></textarea>
+                    <textarea disabled rows="4" autocomplete="off" id="output" name="output" value=""></textarea>
                   </div>
                 </div>
               </div>

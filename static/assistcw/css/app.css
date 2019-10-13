@@ -172,6 +172,7 @@ textarea, textarea:focus, textarea[name=output]:disabled
 {
     resize: vertical;
     color: #e1e3df;
+    font-size: large;
     background-color: #353535;
     border-color: #000000;
 }
