@@ -1,0 +1,341 @@
+<!doctype html>
+<html class="no-js bg" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CW Assist</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'assistcw/img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'assistcw/css/foundation.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assistcw/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'assistcw/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assistcw/fontawesome/css/solid.min.css' %}">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Banner -->
+      <div class="grid-x grid-padding-x header-wrapper noselect">
+        <div class="header large-12 medium-12 small-12 cell">
+          <div class="grid-x grid-padding-x">
+            <div class="large-6 medium-6 small-6 cell">
+              <a class="go-home" href="{% url 'assistcw:index' %}" onmouseover="hover(this);" onmouseout="nohover(this);">
+                <img id="home" src="{% static 'assistcw/img/favicon.ico' %}" alt="CW Assist" />
+                <span class="full-text">
+                  <label for="home">CW Assist</label>
+                </span>
+                <span class="short-text">
+                  <label for="home">CWA</label>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Banner -->
+
+      <!-- Content -->
+      <div class="grid-x grid-padding-x">
+        <div class="large-12 medium-12 small-12 cell">
+          <div class="text2morse">
+            
+            <form action="{% url 'assistcw:index' %}" method="post">
+              {% csrf_token %}
+
+              <!-- Text Input -->
+              <div class="large-12 medium-12 small-12 medium-12 cell">
+                <div class="grid-x grid-padding-x">
+                  <div class="large-12 medium-12 small-12 cell">
+                    <textarea rows="4" autocomplete="off" name="input" placeholder="Type your message..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Morse Output -->
+              <div class="large-12 medium-12 small-12 medium-12 cell">
+                <div class="grid-x grid-padding-x">
+                  <div class="large-12 medium-12 small-12 cell">
+                    <textarea disabled rows="4" autocomplete="off" name="output" placeholder=""></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <br />
+
+              <!-- User Options -->
+              <div class="grid-x grid-padding-x">
+                <div class="large-3 medium-3 small-3 cell">
+                  <div class="grid-x grid-padding-x">
+                    <div class="large-12 medium-12 small-12 cell">
+                        <label for="pitch">
+                          Pitch: 
+                            <span id="pitch-val">
+                              550
+                            </span>
+                             Hz
+                          </label>
+                      <input class="submit-opt" autocomplete="off" id="pitch" type="range" value="550" min="250" max="850" step="25" title="550" oninput="adjustVal('pitch-val', this);" />
+                    </div>
+                    <hr />
+                    <div class="large-12 medium-12 small-12 cell">
+                      <label for="wpm">
+                        Speed: 
+                        <span id="wpm-val">
+                          15
+                        </span>
+                         WPM
+                      </label>
+                      <input class="submit-opt" autocomplete="off" id="wpm" type="range" value="15" min="5" max="60" step="1" title="15" oninput="adjustVal('wpm-val', this);" />
+                    </div>
+                    <div class="large-12 medium-12 small-12 cell">
+                      <label for="wpm-var">
+                        Variability: +/- 
+                        <span id="wpm-var-val">
+                          0
+                        </span>
+                         WPM
+                      </label>
+                      <input class="submit-opt" autocomplete="off" id="wpm-var" type="range" value="0" min="0" max="7" step="1" title="0" oninput="adjustVal('wpm-var-val', this);" />
+                    </div>
+                    <div class="large-12 medium-12 small-12 cell">
+                      <label for="farns">Use Farnsworth Technique?</label>
+                      <input class="submit-opt" autocomplete="off" id="farns" type="checkbox" title="Use Farnsworth WPM" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Q-Signals :: http://uft.net/articles/f9wt/pdf/code.pdf -->
+                <div class="large-3 medium-3 small-3 cell">
+                  <div class="grid-x grid-padding-x">
+                    <div class="large-12 medium-12 small-12 cell">
+                      <h5 title="An incomplete list of Q-Signals.">Q-Signals</h5>
+                      <table>
+                        <tr>
+                          <td>
+                            <span title="Statement: Your exact frequency (or that of ______) is _________kHz. // Question: Will you tell me my exact frequency (or that of __________)?">QRG</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I am busy (or I am busy with _________). // Question: Are you busy? Usually used to see if a frequency is busy.">QRL</span>
+                          </td>
+                          <td>
+                            <span title="Statement: Your transmission is being interfered with _________(1. Nil; 2. Slightly; 3. Moderately; 4. Severely; 5. Extremely.) // Question: Is my transmission being interfered with?">QRM</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I am troubled by static _________. (1 to 5 as under QRM.) // Question: Are you troubled by static?">QRN</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Statement: Increase power. // Question: Shall I increase power?">QRO</span>
+                          </td>
+                          <td>
+                            <span title="Statement: Decrease power. // Question: Shall I decrease power?">QRP</span>
+                          </td>
+                          <td>
+                            <span title="Statement: Send faster (_________wpm). // Question: Shall I send faster?">QRQ</span>
+                          </td>
+                          <td>
+                            <span title="Statement: Send more slowly (_________wpm). // Question: Shall I send more slowly?">QRS</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Statement: Stop sending. // Question: Shall I stop sending?">QRT</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I have nothing for you. // Question: Have you anything for me?">QRU</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I am ready. // Question: Are you ready?">QRV</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I will call you again at ______hours (on ______kHz). // Question: When will you call me again? Minutes are usually implied rather than hours.">QRX</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Statement: You are being called by _________ (on ______kHz). // Question: Who is calling me?">QRZ</span>
+                          </td>
+                          <td>
+                            <span title="Statement: Your signals are fading. // Question: Are my signals fading?">QSB</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I can hear you between signals; break in on my transmission. // Question: Can you hear me between your signals and if so can I break in on your transmission?">QSK</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I am acknowledging receipt. // Question: Can you acknowledge receipt (of a message or transmission)?">QSL</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Statement: I can communicate with _________ direct (or relay through ______). // Question: Can you communicate with ______ direct or by relay?">QSO</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I will relay to ______. // Question: Will you relay to ______?">QSP</span>
+                          </td>
+                          <td>
+                            <span title="Statement: General call preceding a message addressed to all amateurs and ARRL members. This is in effect “CQ ARRL.”">QST</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I am listening to ______ on ______kHz. // Question: Will you listen to ______on ______kHz?">QSX</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Statement: Change to transmission on another frequency (or on ______kHz). // Question: Shall I change to transmission on another frequency (or on ______kHz)?">QSY</span>
+                          </td>
+                          <td>
+                            <span title="Statement: I have ______messages for you (or for ______). // Question: How many messages have you to send?">QTC</span>
+                          </td>
+                          <td>
+                            <span title="Statement: My location is _________. // Question: What is your location?">QTH</span>
+                          </td>
+                          <td>
+                            <span title="Statement: The time is _________. // Question: What is the correct time?">QTR</span>
+                          </td>
+                        </tr>
+                      </table>
+                        
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pro-Signs :: http://cwops.org/wp-content/uploads/2018/07/CW-Abbreviations.pdf -->
+                <div class="large-3 medium-3 small-3 cell">
+                  <div class="grid-x grid-padding-x">
+                    <div class="large-12 medium-12 small-12 cell">
+                      <h5 title="An incomplete list of Pro-Signs.">Pro-Signs</h5>
+                      <table>
+                        <tr>
+                          <td>
+                            <span title="Out: end of message">AR</span>
+                          </td>
+                          <td>
+                            <span title="Stand by">AS</span>
+                          </td>
+                          <td>
+                            <span title="Break: invite receiving station to transmit">BK</span>
+                          </td>
+                          <td>
+                            <span title="Pause: break for text">BT</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Check">CK</span>
+                          </td>
+                          <td>
+                            <span title="Clear: going off the air">CL</span>
+                          </td>
+                          <td>
+                            <span title="Calling any ham station">CQ</span>
+                          </td>
+                          <td>
+                            <span title="From/This is">DE</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Dear">DR</span>
+                          </td>
+                          <td>
+                            <span title="Good night">GN</span>
+                          </td>
+                          <td>
+                            <span title="Over: invite any station to transmit">K</span>
+                          </td>
+                          <td>
+                            <span title="Beginning of message">KA</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Over only: invite a specific station to transmit">KN</span>
+                          </td>
+                          <td>
+                            <span title="Please">PLS</span>
+                          </td>
+                          <td>
+                            <span title="Roger: all received okay">R</span>
+                          </td>
+                          <td>
+                            <span title="End of contact (sent before callsign)">SK</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Distress signal -- ONLY for imminent danger to life or property">SOS</span>
+                          </td>
+                          <td>
+                            <span title="Sorry">SRI</span>
+                          </td>
+                          <td>
+                            <span title="Thanks">TNX</span>
+                          </td>
+                          <td>
+                            <span title="Understood/Verified">VE</span>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <span title="Handshake (half of 88)">44</span>
+                          </td>
+                          <td>
+                            <span title="Best regards">73</span>
+                          </td>
+                          <td>
+                            <span title="Love/Hugs and kisses">88</span>
+                          </td>
+                          <td>
+                            <span title="Get lost!">99</span>
+                          </td>
+                        </tr>
+                      </table>
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br />
+
+              <!-- Submission Options -->
+              <div class="grid-x grid-padding-x">
+                <div class="large-6 medium-6 small-6 cell">
+                  <button class="submit-opt" type="submit" title="Listen">
+                    <i class="fas fa-headphones"></i>
+                  </button>
+                </div>
+                <div class="large-6 medium-6 small-6 cell">
+                  <button class="submit-opt" type="submit" title="Broadcast">
+                    <i class="fas fa-broadcast-tower"></i>
+                  </button>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <!-- End Content -->
+
+    </div>
+    <br />
+    <script src="{% static 'assistcw/js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'assistcw/js/vendor/what-input.js' %}"></script>
+    <script src="{% static 'assistcw/js/vendor/foundation.min.js' %}"></script>
+    <script src="{% static 'assistcw/js/app.js' %}"></script>
+  </body>
+</html>
