@@ -144,7 +144,7 @@ function convert(elem)
                 arr[idx] = "----.";
                 break;
             case " ":
-                arr[idx] = "    ";
+                arr[idx] = " ";
                 break;
             case ".":
                 arr[idx] = ".-.-.-";
