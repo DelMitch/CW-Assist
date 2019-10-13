@@ -227,3 +227,57 @@ function adjustVal(id, elem)
         }
     }
 }
+
+$('button[id=listen]').on('click', '', function(e)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/',
+        data: {
+            pinput:$('#input').val(),
+            output:$('#output').val(),
+            pitch:$('#pitch').val(),
+            wpm:$('#wpm').val(),
+            wpmvar:$('#wpm-var').val(),
+            farns:$('#farns').prop('checked'),
+            opt:$('button[id=listen]').attr('id'),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success:function(json)
+        {
+            //console.log("success L");
+        },
+        error:function(xhr, errmsg, err)
+        {
+            console.log(xhr.status + " : " + xhr.responseText);
+        }
+    });
+});
+
+$('button[id=broadcast]').on('click', '', function(e)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/',
+        data: {
+            pinput:$('#input').val(),
+            output:$('#output').val(),
+            pitch:$('#pitch').val(),
+            wpm:$('#wpm').val(),
+            wpmvar:$('#wpm-var').val(),
+            farns:$('#farns').prop('checked'),
+            opt:$('button[id=broadcast]').attr('id'),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success:function(json)
+        {
+            //console.log("success B");
+        },
+        error:function(xhr, errmsg, err)
+        {
+            console.log(xhr.status + " : " + xhr.responseText);
+        }
+    });
+});

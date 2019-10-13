@@ -4,7 +4,7 @@ body text: #e1e3df
 L1 objects: #333333  // L1: supports a thing that can be interacted with
 L1 supplement: #21252b
 L2 objects: #46555f  // L2: is a thing that can be interacted with
-L2 supplement: #4b5a5f
+L2 supplement: #4d5c5f
 L2 text: #000000
 accent: #e1e3df
 background: #e1e3df
@@ -168,7 +168,7 @@ input[type=checkbox]
     margin-top: 0.5rem;
 }
 
-textarea, textarea:focus, textarea[name=output]:disabled
+textarea, textarea:focus, textarea[readonly]
 {
     resize: vertical;
     color: #e1e3df;
@@ -177,9 +177,9 @@ textarea, textarea:focus, textarea[name=output]:disabled
     border-color: #000000;
 }
 
-.submit-opt:hover, .submit-opt:focus
+.submit-opt:hover
 {
-    background-color: #4b5a5f;
+    background-color: #4d5c5f;
 }
 
 h5
