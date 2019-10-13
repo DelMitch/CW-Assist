@@ -1,0 +1,196 @@
+/* Color Guide */
+/*
+body text: #e1e3df
+L1 objects: #333333  // L1: supports a thing that can be interacted with
+L1 supplement: #21252b
+L2 objects: #46555f  // L2: is a thing that can be interacted with
+L2 supplement: #4b5a5f
+L2 text: #000000
+accent: #e1e3df
+background: #e1e3df
+*/
+
+/* :: MISC ACCENTS :: */
+.noselect
+{
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+body
+{
+    min-width:400px;
+    background-color: #e1e3df;
+}
+
+.fas
+{
+    font-size: 30px;
+    color: #e1e3df;
+    vertical-align: text-top;
+    cursor: pointer;
+}
+hr
+{
+    height: 2px;
+    color: #46555f;
+    background-color: #46555f;
+    border: none;
+}
+
+/* :: HEADER/FOOTER :: */
+.header-wrapper.callout
+{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.header
+{
+    margin-bottom: 1rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.header, .more, .none-found
+{
+    background-color: #46555f;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.short-text
+{
+    display: none;
+}
+
+@media (max-width: 1100px)
+{
+    .short-text
+    {
+        display: inline-block;
+    }
+
+    .full-text
+    {
+        display: none;
+    }
+}
+
+#home
+{
+    display: inline-block;
+    vertical-align: baseline;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+label[for=home]
+{
+    font-size: 1.5625rem;
+    line-height: 1.4;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    color: #e1e3df;
+    text-rendering: optimizeLegibility;
+    display: inline-block;
+    vertical-align: 5%;
+    cursor: pointer;
+}
+
+a.go-home:hover
+{
+    filter: invert(100%);
+}
+
+/* :: TEXT2MORSE :: */
+.text2morse
+{
+    background-color: #21252b;
+    color: #ffffff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.submit-opt
+{
+    background-color: #46555f;
+    text-align: center;
+    width: 100%;
+    border-radius: 5px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    cursor: pointer;
+}
+
+#farns
+{
+    float: right;
+    width: 1rem;
+}
+
+label[for="farns"]
+{
+    float: left;
+}
+
+label
+{
+    color: #e1e3df;
+    font-size: large;
+}
+
+span#pitch-val, span#wpm-val, span#wpm-var-val
+{
+    font-weight: bold;
+}
+
+input[type=number], input[type=number]:hover, input[type=number]:focus
+{
+    color: #e1e3df;
+    background-color: #353535;
+    border-color: #000000;
+}
+
+input[type=checkbox]
+{
+    margin-top: 0.5rem;
+}
+
+textarea, textarea:focus, textarea[name=output]:disabled
+{
+    resize: vertical;
+    color: #e1e3df;
+    background-color: #353535;
+    border-color: #000000;
+}
+
+.submit-opt:hover, .submit-opt:focus
+{
+    background-color: #4b5a5f;
+}
+
+h5
+{
+    text-align: center;
+    font-weight: bold;
+}
+
+table, tr, td
+{
+    border: 1px solid #e1e3df;
+    background-color: #21252b;
+    text-align: center;
+    font-weight: bold;
+}
