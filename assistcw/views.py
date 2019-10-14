@@ -10,7 +10,7 @@ import sounddevice as sd
 
 
 dot = 1.0
-dash = 3.0 * dot
+dash = 3.0
 
 
 def index(request):
@@ -33,11 +33,14 @@ def index(request):
 def process(opt, output, pitch, wpm, wpmvar, farns):
     for ch in output:
         if ch == ".":
-            playSound(dot/wpm, pitch)
+            playSound(dot, pitch)
+            #time.sleep(dot/wpm)
         elif ch == "-":
-            playSound(dash/wpm, pitch)
+            playSound(dash, pitch)
+            #time.sleep(dot/wpm)
         elif ch == " ":
-            playSound(dot/wpm, pitch)
+            #playSound(dot, pitch)
+            time.sleep(dot)
         else:
             raise Exception("Invalid Character")
     
@@ -54,8 +57,9 @@ def playSound(duration, pitch):
 
     fs = 44100   # Hz - sample rate
     freq = pitch # Hz - frequency
-
-    data = ''.join([chr(int(math.sin(x/((fs/freq)/math.pi))*127+128)) for x in range(fs)])
+    chunk = 4000000
+    
+    data = ''.join([chr(int(math.sin(x/((fs/freq)/math.pi))*127+128)) for x in range(fs*int(duration))])
     
     print(data)
 
@@ -64,8 +68,8 @@ def playSound(duration, pitch):
                     rate = fs,
                     output = True)
 
-    for i in range(int(duration)):
-        stream.write(data[i])
+    for i in range(0, fs*int(duration), chunk):
+        stream.write(data[i:i+chunk])
 
     stream.stop_stream()
     stream.close()
